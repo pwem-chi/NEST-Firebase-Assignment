@@ -1,8 +1,7 @@
 import { Controller, Post, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
+import * as admin from 'firebase-admin';
 
-
-const { admin } = require('../db init');
 
 const db = admin.firestore();
 

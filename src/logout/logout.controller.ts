@@ -1,7 +1,8 @@
 import { Controller, Get, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
+import * as admin from 'firebase-admin';
+import { finished } from 'stream';
 
-const { admin } = require('../db init');
 
 const db = admin.firestore();
 
@@ -11,10 +12,11 @@ const userCollection = db.collection("Users");
 export class LogoutController {
     @Get()
     signOut(@Req() req: Request, @Res() res: Response){
-        if(req.body.password == null){
+        if(req.body.password == ""){
+            let reqId = req.params.id
             let passReq = { "password": req.body.password }
 
-            userCollection.doc(String(passReq)).get()
+           let logOut = userCollection.doc(String(reqId)).get()
 
             res.json({
                 "message": "Cannot log out"
@@ -22,7 +24,7 @@ export class LogoutController {
 
         }else{
             res.json({
-                "message": "Log out Success"
+                "message": "Log out success"
             })
         }
     }
